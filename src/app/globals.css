@@ -1,26 +1,42 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+html,
+body {
+  max-width: 100vw;
+  overflow-x: hidden;
+}
 
 body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: Arial, Helvetica, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-.styles_gradient__aOak5 {
-  background-size: cover;
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
 }
 
-.styles_gradient__aOak5:nth-child(4n + 1) {
-  background-image: url(/images/mesh-gradient-1.svg);
+a {
+  color: inherit;
+  text-decoration: none;
 }
 
-.styles_gradient__aOak5:nth-child(4n + 2) {
-  background-image: url(/images/mesh-gradient-2.svg);
-}
-
-.styles_gradient__aOak5:nth-child(4n + 3) {
-  background-image: url(/images/mesh-gradient-3.svg);
-}
-
-.styles_gradient__aOak5:nth-child(4n + 4) {
-  background-image: url(/images/mesh-gradient-4.svg);
+@media (prefers-color-scheme: dark) {
+  html {
+    color-scheme: dark;
+  }
 }
