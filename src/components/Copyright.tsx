@@ -11,10 +11,7 @@ export default function Copyright() {
         color: "text.secondary",
       }}
     >
-      {"Copyright © "}
-      <MuiLink color="inherit" href="https://mui.com/">
-        Your Website
-      </MuiLink>{" "}
+      {"Copyright ©. Next.js Admin Template. "}
       {new Date().getFullYear()}.
     </Typography>
   );
