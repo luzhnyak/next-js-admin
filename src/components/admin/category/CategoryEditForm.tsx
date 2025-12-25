@@ -7,7 +7,7 @@ import {
   useCreateCategoryMutation,
   useUpdateCategoryMutation,
 } from "@/tanstack/mutations/categories";
-import { editCategorySchema } from "@/shemas/editCategorySchema";
+import { editCategorySchema } from "@/schemas/editCategorySchema";
 
 // import { useCategorySchema } from "@/schemas/category";
 
@@ -74,13 +74,9 @@ export const CategoryEditForm = ({
             type="submit"
             variant="contained"
             color="primary"
-            disabled={
-              (createCategory as any).isLoading ||
-              (updateCategory as any).isLoading
-            }
+            disabled={createCategory.isPending || updateCategory.isPending}
           >
-            {(createCategory as any).isLoading ||
-            (updateCategory as any).isLoading
+            {createCategory.isPending || updateCategory.isPending
               ? "Saving"
               : "Save"}
           </Button>

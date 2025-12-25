@@ -1,15 +1,13 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
-
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { useState } from "react";
+import { useSearchParams } from "next/navigation";
 
 import { Column, CustomTable } from "../../ui/CustomTable";
 import { Typography, Box, Button } from "@mui/material";
-import { Add, Delete, Edit, Visibility } from "@mui/icons-material";
+import { Add, Delete, Edit } from "@mui/icons-material";
 
-import { ColorBtn, ICategory, Routes } from "@/types";
+import { ColorBtn, CategoryDTO } from "@/types";
 
 import { useUpdateSearchParams } from "@/hooks/updateSearchParams";
 import { CustomTablePagination } from "@/components/ui/CustomTablePagination";
@@ -29,7 +27,7 @@ export const CategoryList = () => {
   const page = Number(searchParams.get("page")) || 1;
   const rowsPerPage = Number(searchParams.get("rowsPerPage")) || 10;
 
-  const { data, isLoading } = useGetCategoriesQuery({
+  const { data } = useGetCategoriesQuery({
     page,
     limit: rowsPerPage,
   });
@@ -37,18 +35,15 @@ export const CategoryList = () => {
   const categories = data?.items ?? [];
   const total = data?.total ?? 0;
 
-  // 🔥 Мутація видалення
   const deleteCategory = useDeleteCategoryMutation();
 
-  const router = useRouter();
-
-  const columns: Column<ICategory>[] = [
+  const columns: Column<CategoryDTO>[] = [
     { id: "id", label: "ID" },
     { id: "name", label: "Name" },
     { id: "slug", label: "Slug" },
   ];
 
-  const actions: Action<ICategory>[] = [
+  const actions: Action<CategoryDTO>[] = [
     {
       key: "editCategoryBtn",
       icon: <Edit />,

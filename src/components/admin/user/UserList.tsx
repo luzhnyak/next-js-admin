@@ -4,7 +4,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { Typography, Box } from "@mui/material";
 import { Delete, Edit, Visibility } from "@mui/icons-material";
 
-import { ColorBtn, IUser, Routes } from "@/types";
+import { ColorBtn, Routes, UserDTO } from "@/types";
 import { useGetUsersQuery } from "@/tanstack/queries/users";
 
 import { useUpdateSearchParams } from "@/hooks/updateSearchParams";
@@ -25,7 +25,7 @@ export const UserList = () => {
   const page = Number(searchParams.get("page")) || 1;
   const rowsPerPage = Number(searchParams.get("rowsPerPage")) || 10;
 
-  const { data, isLoading } = useGetUsersQuery({
+  const { data } = useGetUsersQuery({
     page,
     limit: rowsPerPage,
   });
@@ -37,13 +37,13 @@ export const UserList = () => {
 
   const router = useRouter();
 
-  const columns: Column<IUser>[] = [
+  const columns: Column<UserDTO>[] = [
     { id: "id", label: "ID" },
     { id: "displayName", label: "Name" },
     { id: "email", label: "Email" },
   ];
 
-  const actions: Action<IUser>[] = [
+  const actions: Action<UserDTO>[] = [
     {
       key: "viewUserBtn",
       icon: <Visibility />,

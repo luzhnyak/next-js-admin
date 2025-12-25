@@ -12,19 +12,23 @@ import {
   Select,
   InputLabel,
   MenuItem,
+  FormControlLabel,
+  Checkbox,
 } from "@mui/material";
 import {
   useCreatePostMutation,
   useUpdatePostMutation,
 } from "@/tanstack/mutations/posts";
-import { editPostSchema } from "@/shemas/editPostSchema";
-import { ICategory, IPost, IPostCreate } from "@/types";
+import { editPostSchema } from "@/schemas/editPostSchema";
+import { IPostCreate } from "@/types";
 import { useGetAllCategoriesQuery } from "@/tanstack/queries/categories/getAllCategories";
-import { TipTapEditor } from "@/components/ui/TipTapEditor";
+
+import { ImageUpload } from "@/components/admin/post/ImageUpload";
+import { PostDTO } from "@/types/DTO/postDTO";
 
 interface PostEditFormProps {
   postId?: number;
-  initialData?: IPost;
+  initialData?: PostDTO;
   setIsOpenModal: (isOpen: boolean) => void;
 }
 
@@ -54,6 +58,7 @@ export const PostEditForm = ({
       content: initialData?.content || "",
       slug: initialData?.slug || "",
       answer: initialData?.answer || "",
+      showMainImage: initialData?.showMainImage || false,
       categoryIds: initialData?.categories.map((c) => c.id) ?? [],
     },
   });
@@ -86,14 +91,6 @@ export const PostEditForm = ({
             error={!!errors.title}
             helperText={errors.title?.message}
           />
-          <TextField
-            label="Content"
-            multiline
-            rows={8}
-            {...register("content")}
-            error={!!errors.content}
-            helperText={errors.content?.message}
-          />
           <Box>
             <Typography variant="subtitle2" mb={1}>
               Content
@@ -102,6 +99,8 @@ export const PostEditForm = ({
               value={watch("content")}
               onChange={(html) => setValue("content", html)}
               height={200}
+              postId={postId || 0}
+              images={initialData?.images.map((img) => img.imageUrl) || []}
             />
             {errors.content && (
               <Typography color="error" variant="caption">
@@ -109,14 +108,23 @@ export const PostEditForm = ({
               </Typography>
             )}
           </Box>
-          <TextField
-            label="Answer"
-            multiline
-            rows={4}
-            {...register("answer")}
-            error={!!errors.answer}
-            helperText={errors.answer?.message}
-          />
+          <Box>
+            <Typography variant="subtitle2" mb={1}>
+              Answer
+            </Typography>
+            <TipTapEditor
+              value={watch("answer") || ""}
+              onChange={(html) => setValue("answer", html)}
+              height={200}
+              postId={postId || 0}
+              images={initialData?.images.map((img) => img.imageUrl) || []}
+            />
+            {errors.content && (
+              <Typography color="error" variant="caption">
+                {errors?.answer?.message}
+              </Typography>
+            )}
+          </Box>
           <TextField
             label="Slug"
             {...register("slug")}
@@ -145,17 +153,24 @@ export const PostEditForm = ({
               ))}
             </Select>
           </FormControl>
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={watch("showMainImage")}
+                onChange={(e) => setValue("showMainImage", e.target.checked)}
+              />
+            }
+            label="Показувати головне зображення"
+          />
+          <ImageUpload postId={postId || 0} />
+
           <Button
             type="submit"
             variant="contained"
             color="primary"
-            disabled={
-              (createPost as any).isLoading || (updatePost as any).isLoading
-            }
+            disabled={createPost.isPending || updatePost.isPending}
           >
-            {(createPost as any).isLoading || (updatePost as any).isLoading
-              ? "Saving"
-              : "Save"}
+            {createPost.isPending || updatePost.isPending ? "Saving" : "Save"}
           </Button>
         </Stack>
       </form>

@@ -1,11 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { Column, CustomTable } from "../../ui/CustomTable";
 import { Typography, Box, Button } from "@mui/material";
-import { Add, Delete, Edit, Visibility } from "@mui/icons-material";
-import { ColorBtn, ICategory, IPost, Routes } from "@/types";
+import { Add, Delete, Edit } from "@mui/icons-material";
+import ImageIcon from "@mui/icons-material/Image";
+import { ColorBtn } from "@/types";
 
 import { useUpdateSearchParams } from "@/hooks/updateSearchParams";
 import { CustomTablePagination } from "@/components/ui/CustomTablePagination";
@@ -14,9 +15,13 @@ import { Action } from "@/components/ui/TableActionsBtn";
 import { useGetPostsQuery } from "@/tanstack/queries/posts";
 import { useDeletePostMutation } from "@/tanstack/mutations/posts";
 import { PostEditForm } from "./PostEditForm";
+import PostImagesManager from "./PostImagesManager";
+import { PostDTO } from "@/types/DTO/postDTO";
 
 export const PostList = () => {
   const [isCreateModalOpen, setIsCreateModalOpen] = useState<boolean>(false);
+  const [isImageManagerModalOpen, setIsImageManagerModalOpen] =
+    useState<boolean>(false);
   const [postId, setPostId] = useState<number>(0);
 
   const searchParams = useSearchParams();
@@ -25,7 +30,7 @@ export const PostList = () => {
   const page = Number(searchParams.get("page")) || 1;
   const rowsPerPage = Number(searchParams.get("rowsPerPage")) || 10;
 
-  const { data, isLoading } = useGetPostsQuery({
+  const { data } = useGetPostsQuery({
     page: page,
     limit: rowsPerPage,
   });
@@ -35,17 +40,13 @@ export const PostList = () => {
 
   const deletePost = useDeletePostMutation();
 
-  const router = useRouter();
-
-  const columns: Column<IPost>[] = [
+  const columns: Column<PostDTO>[] = [
     { id: "id", label: "ID" },
     { id: "title", label: "Title" },
     { id: "slug", label: "Slug" },
-    // { id: "createdAt", label: "Created At" },
-    // { id: "updated_at", label: "Updated At" },
   ];
 
-  const actions: Action<IPost>[] = [
+  const actions: Action<PostDTO>[] = [
     {
       key: "editPostBtn",
       icon: <Edit />,
@@ -53,6 +54,15 @@ export const PostList = () => {
       onClick: (post) => {
         setPostId(post.id);
         setIsCreateModalOpen(true);
+      },
+    },
+    {
+      key: "imageManagerPostBtn",
+      icon: <ImageIcon />,
+      color: ColorBtn.PRIMARY,
+      onClick: (post) => {
+        setPostId(post.id);
+        setIsImageManagerModalOpen(true);
       },
     },
     {
@@ -70,6 +80,7 @@ export const PostList = () => {
   ];
 
   const handleCreate = () => {
+    setPostId(0);
     setIsCreateModalOpen(true);
   };
 
@@ -109,6 +120,15 @@ export const PostList = () => {
         ) : (
           <PostEditForm setIsOpenModal={setIsCreateModalOpen} />
         )}
+      </Modal>
+      <Modal
+        isOpenModal={isImageManagerModalOpen}
+        setOpenModal={setIsImageManagerModalOpen}
+      >
+        <PostImagesManager
+          postId={postId}
+          initialImages={posts.find((c) => c.id === postId)?.images || []}
+        />
       </Modal>
     </Box>
   );

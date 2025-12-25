@@ -11,7 +11,7 @@ import {
   useUpdateUserMutation,
 } from "@/tanstack/mutations/users";
 
-import { editUserSchema } from "@/shemas/editUserSchema";
+import { editUserSchema } from "@/schemas/editUserSchema";
 
 interface UserFormData {
   displayName: string;
@@ -65,9 +65,10 @@ export const UserEditForm = ({
     setIsOpenModal(false);
   };
 
-  // useEffect(() => {
-  //   if (error) toast.error(t("user.errorLoadingUser"));
-  // }, [error, t, toast]);
+  useEffect(() => {
+    if (createUser.error) toast.error(createUser.error.message);
+    if (updateUser.error) toast.error(updateUser.error.message);
+  }, [createUser.error, updateUser.error]);
 
   return (
     <Box>
@@ -99,11 +100,9 @@ export const UserEditForm = ({
             type="submit"
             variant="contained"
             color="primary"
-            disabled={
-              (createUser as any).isLoading || (updateUser as any).isLoading
-            }
+            disabled={createUser.isPending || updateUser.isPending}
           >
-            {(createUser as any).isLoading || (updateUser as any).isLoading
+            {createUser.isPending || updateUser.isPending
               ? "Saving..."
               : "Save"}
           </Button>
