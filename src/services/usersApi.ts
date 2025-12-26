@@ -1,5 +1,3 @@
-import { fetch } from "@/lib/fetch";
-
 export async function getUsersApi(params?: { page?: number; limit?: number }) {
   const query = new URLSearchParams();
 
