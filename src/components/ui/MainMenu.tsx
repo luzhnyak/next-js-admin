@@ -21,11 +21,9 @@ import { useAuth } from "@/stores/useAuth";
 import UserMenu from "./UserMenu";
 
 const MENU = [
-  { label: "Головна", href: "/" },
-  { label: "Задачі", href: "/tasks" },
-  { label: "Створити задачу", href: "/tasks/new" },
-  { label: "Мої задачі", href: "/my" },
-  { label: "Таблиця лідерів", href: "/leaderboard" },
+  { label: "Home", href: "/" },
+  { label: "Posts", href: "/posts" },
+  { label: "Create Post", href: "/posts/new" },
 ];
 
 export default function MainMenu() {
