@@ -45,13 +45,11 @@ export default function SidebarNav() {
     <Box
       sx={{
         width: 260,
-        borderRight: "1px solid #e0e0e0",
         height: "100vh",
         position: "sticky",
         top: 0,
         display: "flex",
         flexDirection: "column",
-        backgroundColor: "#fafafa",
       }}
     >
       {/* 🔵 Блок користувача */}

@@ -13,8 +13,8 @@ export default function RootLayout(props: { children: React.ReactNode }) {
         <MUIProvider>
           <ThemeProvider theme={theme}>
             {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
-            {/* <CssBaseline />
-            <ModeSwitch /> */}
+            <CssBaseline />
+            <ModeSwitch />
             {props.children}
           </ThemeProvider>
         </MUIProvider>

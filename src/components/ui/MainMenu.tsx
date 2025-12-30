@@ -16,9 +16,7 @@ import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import Typography from "@mui/material/Typography";
-
-import { useAuth } from "@/stores/useAuth";
-import UserMenu from "./UserMenu";
+import UserMenu from "../UserMenu";
 
 const MENU = [
   { label: "Home", href: "/" },
@@ -29,8 +27,6 @@ const MENU = [
 export default function MainMenu() {
   const pathname = usePathname() || "/";
   const router = useRouter();
-
-  const user = useAuth((s) => s.user);
 
   const [drawerOpen, setDrawerOpen] = useState(false);
 
