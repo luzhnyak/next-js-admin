@@ -2,15 +2,14 @@
 
 import { useQuery } from "@tanstack/react-query";
 import { getPostsApi } from "@/services/postsApi";
-import { ApiListResponse } from "@/types";
-import { PostDTO } from "@/types/DTO/postDTO";
+import { ApiListResponse, IPost } from "@/types";
 
 export const useGetPostsQuery = (params?: {
   page?: number;
   limit?: number;
   category?: string;
 }) => {
-  return useQuery<ApiListResponse<PostDTO>>({
+  return useQuery<ApiListResponse<IPost>>({
     queryKey: ["posts", params],
     queryFn: () => getPostsApi(params),
   });

@@ -2,12 +2,11 @@
 
 import { useQuery } from "@tanstack/react-query";
 import { getAllCategoriesApi } from "@/services/categoriesApi";
-import { ApiListResponse, CategoryDTO } from "@/types";
+import { ApiListResponse, ICategory } from "@/types";
 
 export const useGetAllCategoriesQuery = () => {
-  return useQuery<ApiListResponse<CategoryDTO>>({
+  return useQuery<ApiListResponse<ICategory>>({
     queryKey: ["categories", "all"],
     queryFn: () => getAllCategoriesApi(),
-    staleTime: 1000 * 60 * 30,
   });
 };
