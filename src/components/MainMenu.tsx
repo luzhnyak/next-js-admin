@@ -17,22 +17,15 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import Typography from "@mui/material/Typography";
 
-import { useAuth } from "@/stores/useAuth";
 import UserMenu from "./UserMenu";
 
 const MENU = [
   { label: "Головна", href: "/" },
-  { label: "Задачі", href: "/tasks" },
-  { label: "Створити задачу", href: "/tasks/new" },
-  { label: "Мої задачі", href: "/my" },
-  { label: "Таблиця лідерів", href: "/leaderboard" },
+  { label: "Posts", href: "/posts" },
 ];
 
 export default function MainMenu() {
   const pathname = usePathname() || "/";
-  const router = useRouter();
-
-  const user = useAuth((s) => s.user);
 
   const [drawerOpen, setDrawerOpen] = useState(false);
 
