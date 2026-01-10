@@ -25,7 +25,6 @@ export default function Home() {
             Go to the Admin page
           </Typography>
         </Link>
-        <Copyright />
       </Box>
     </Container>
   );

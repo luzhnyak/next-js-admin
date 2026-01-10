@@ -3,14 +3,16 @@
 import React from "react";
 import { useRouter } from "next/navigation";
 import { Avatar, IconButton, Tooltip, Menu, MenuItem } from "@mui/material";
-import { useAuth } from "@/stores/useAuth";
+
 import { getGravatarUrl } from "@/lib/gravatar";
+import { useCurrentUserQuery } from "@/tanstack/queries/auth/useCurrentUserQuery";
+import { useLogoutMutation } from "@/tanstack/mutations/auth/useLogoutMutation";
 
 export default function UserMenu() {
   const router = useRouter();
 
-  const user = useAuth((s) => s.user);
-  const logout = useAuth((s) => s.logout);
+  const { data: currentUser } = useCurrentUserQuery();
+  const logout = useLogoutMutation();
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -19,19 +21,19 @@ export default function UserMenu() {
     setAnchorEl(e.currentTarget);
   const handleClose = () => setAnchorEl(null);
 
-  if (!user) {
+  if (!currentUser) {
     return (
       <MenuItem onClick={() => router.push("/auth/login")}>Логін</MenuItem>
     );
   }
 
-  const avatarUrl = getGravatarUrl(user.email, 80);
+  const avatarUrl = getGravatarUrl(currentUser.email, 80);
 
   return (
     <>
       <Tooltip title="Профіль">
         <IconButton onClick={handleClick}>
-          <Avatar src={avatarUrl} alt={user.displayName} />
+          <Avatar src={avatarUrl} alt={currentUser.displayName} />
         </IconButton>
       </Tooltip>
 
@@ -45,7 +47,7 @@ export default function UserMenu() {
           Профіль
         </MenuItem>
 
-        {user.role === "admin" && (
+        {currentUser.role === "admin" && (
           <MenuItem
             onClick={() => {
               handleClose();
@@ -59,7 +61,7 @@ export default function UserMenu() {
         <MenuItem
           onClick={async () => {
             handleClose();
-            await logout();
+            await logout.mutateAsync();
             router.refresh();
           }}
         >
