@@ -3,7 +3,6 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 
 import Link from "next/link";
-import Copyright from "@/components/Copyright";
 
 export default function Home() {
   return (
