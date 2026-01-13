@@ -62,7 +62,6 @@ export default function MainMenu() {
           </Tabs>
         </Box>
 
-        {/* Мобільна кнопка */}
         <Box sx={{ display: { xs: "flex", md: "none" } }}>
           <IconButton onClick={() => setDrawerOpen(true)}>
             <MenuIcon />
@@ -70,8 +69,7 @@ export default function MainMenu() {
         </Box>
 
         <Box sx={{ display: "flex", gap: 1, alignItems: "center" }}>
-          {/* Якщо юзер Є → показати аватар */}
-          <UserMenu />
+          {/* <UserMenu /> */}
         </Box>
 
         {/* Drawer */}
