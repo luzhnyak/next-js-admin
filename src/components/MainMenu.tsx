@@ -72,7 +72,7 @@ export default function MainMenu() {
           {/* <UserMenu /> */}
         </Box>
 
-        {/* Drawer */}
+
         <Drawer
           anchor="left"
           open={drawerOpen}
