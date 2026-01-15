@@ -11,8 +11,7 @@ export default function RootLayout(props: { children: React.ReactNode }) {
       <body>
         <InitColorSchemeScript attribute="class" />
         <MUIProvider>
-          <ThemeProvider theme={theme}>
-            {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
+          <ThemeProvider theme={theme}>            
             <CssBaseline />
             <ModeSwitch />
             {props.children}
