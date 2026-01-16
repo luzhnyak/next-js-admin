@@ -71,11 +71,9 @@ export default function MainMenu() {
         </Box>
 
         <Box sx={{ display: "flex", gap: 1, alignItems: "center" }}>
-          {/* Якщо юзер Є → показати аватар */}
           {/* <UserMenu /> */}
         </Box>
 
-        {/* Drawer */}
         <Drawer
           anchor="left"
           open={drawerOpen}
